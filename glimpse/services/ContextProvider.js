@@ -21,6 +21,7 @@ const Provider = ({children}) => {
     XFG: '#C0C0C0',
     Accent: '#E2C275',
     MainText: '#000000',
+    GreyedText: '#989898',
     BlackText: '#000000',
     WhiteText: '#FFFFFF',
   };
@@ -32,7 +33,9 @@ const Provider = ({children}) => {
     XFG: '#717A87',
     Accent: '#BBA162',
     MainText: '#FFFFFF',
+    GreyedText: '#989898',
     BlackText: '#000000',
+    WhiteText: '#FFFFFF',
   };
 
   const [JWT, setJWT] = useState('');
@@ -65,4 +68,4 @@ const Provider = ({children}) => {
   );
 };
 
-export default ContextProvider;
+export default Provider;

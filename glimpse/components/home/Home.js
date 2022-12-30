@@ -17,6 +17,11 @@ const Header = styled.View`
 `;
 
 const AddFriendButton = styled.TouchableOpacity`
+    width: ${props => (props.width * 30) / 390}px;
+    height: ${props => (props.height * 30) / 844}px;
+    display: flex;
+    justify-contents: center;
+    align-items: center;
 `;
 
 const AddFriendIcon = styled.Image`
@@ -38,16 +43,18 @@ const Title = styled.Text`
     font-size: 26px;
 `;
 
-const Home = () => {
+const Home = ({route, navigation}) => {
     const windowWidth = Dimensions.get('window').width;
+    const windowHeight = Dimensions.get('window').height;
+    const style = {width: windowWidth, height: windowHeight};
     return (
         <Container>
             <Header width={windowWidth}>
-                <AddFriendButton>
+                <AddFriendButton {...style}>
                     <AddFriendIcon source={AddFriendIconImage} width={windowWidth} />
                 </AddFriendButton>
                 <Title>Glimpse</Title>
-                <ProfileButton>
+                <ProfileButton onPress={() => navigation.navigate("Profile")}>
                     <ProfileIcon width={windowWidth}/>
                 </ProfileButton>
             </Header>

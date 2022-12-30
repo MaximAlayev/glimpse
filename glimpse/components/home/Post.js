@@ -47,9 +47,10 @@ const PostText = styled.Text`
     font-size: 14px;
     padding-top: ${props => (props.winHeight * 10) / 844}px;
     padding-horizontal: ${props => (props.winWidth * 15) / 390}px;
+    padding-bottom: ${props => (props.winHeight * 34) / 844}px;
 `;
 
-const Post = () => {
+const Post = ({route, navigation}) => {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
     return (

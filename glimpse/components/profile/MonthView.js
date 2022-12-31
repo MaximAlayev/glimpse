@@ -67,7 +67,7 @@ const EditBox = styled.TouchableOpacity`
     justify-content: center;
     border-width: 2px;
     border-color: #575757;
-    border-radius: ${props => 11 * props.widthFactor}
+    border-radius: ${props => 11 * props.widthFactor}px;
     margin-vertical: ${props => 15 * props.heightFactor}px;
 `;
 

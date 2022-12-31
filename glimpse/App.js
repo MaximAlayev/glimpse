@@ -5,6 +5,7 @@ import 'react-native-gesture-handler';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
+import EditDraft from './components/editDraft/EditDraft';
 import Provider from './services/ContextProvider';
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +20,7 @@ function NavigationStack() {
             }}>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="EditDraft" component={EditDraft} />
             {
                 //   <Stack.Screen name="AddFriends" component={AddFriends} />
             }

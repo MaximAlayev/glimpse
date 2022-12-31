@@ -98,8 +98,7 @@ const Profile = ({route, navigation}) => {
             </ToggleContainer>
             <Divider {...style}/>
             {isDisplayingFriends && <FriendList list={friends}/>}
-            <MonthView {...month}/>
-
+            <MonthView {...month} navigation={navigation}/>
         </Background>
         </Container>
     );

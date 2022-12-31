@@ -118,7 +118,7 @@ function weekFromStartMonth(month, year) {
     return {weeksInThisMonth, currWeek};
 }
 
-const MonthView = props => {
+const MonthView = (props) => {
     const windowHeight = Dimensions.get('window').height;
     const windowWidth = Dimensions.get('window').width;
     const {palette, isDarkMode} = useContext(Context);
@@ -127,7 +127,7 @@ const MonthView = props => {
         widthFactor: windowWidth / 390,
         palette,
     };
-    const {month, year}= props;
+    const {month, year, navigation} = props;
 
     const {weeksInThisMonth, currWeek} = weekFromStartMonth(month, year);
     const currDay = new Date().getDate();
@@ -154,7 +154,7 @@ const MonthView = props => {
                     </WeekBox>
                 </>
             ))}
-            <EditBox {...style}>
+            <EditBox {...style} onPress={() => navigation.navigate("EditDraft")}>
                 <EditText {...style}>
                     Edit this week's draft
                 </EditText>

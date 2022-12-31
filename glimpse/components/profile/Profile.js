@@ -6,6 +6,7 @@ import {Context} from '../../services/ContextProvider';
 import backArrow from '../../assets/backArrow.png'
 import ProfileDisplayToggle from './ProfileDisplayToggle';
 import FriendList from './FriendList';
+import MonthView from './MonthView';
 
 const Container = styled(SafeAreaView)`
     background-color: ${props => props.palette.BG};
@@ -58,6 +59,12 @@ const BackArrowIcon = styled.Image`
 
 const ToggleContainer = styled.View`
     margin-top: ${props => (props.height * 16) / 844}px;
+    height: auto;
+`;
+
+const Divider = styled.View`
+    margin-top: ${props => (props.height * 25) / 844}px;
+    height: 0px;
 `;
 
 const Profile = ({route, navigation}) => {
@@ -70,20 +77,13 @@ const Profile = ({route, navigation}) => {
     const {palette, isDarkMode} = useContext(Context);
     const style = {height: windowHeight, width: windowWidth, palette};
 
-    const DisplayContent = (props) => {
-        if (isDisplayingFriends) {
-            return <FriendList {...props}/>
-        } else {
-            return <></>
-        }
-    }
-
     const max = {name: "Maxim Alayev", username: "max"};
     const michael = {name: "Michael Batchev", username: "michael"};
     const maximilliano = {name: "Maximimilliano Alfredoregallo", username: "maximilliano"};
     const robert = {name: "Robert", username: "robert"};
     const friends = [max, michael, maximilliano, robert];
 
+    const month = {month: 11, year: 2022}
     return (
         <Container {...style}>
         <Background {...style}>
@@ -96,8 +96,10 @@ const Profile = ({route, navigation}) => {
             <ToggleContainer {...style}>
                 <ProfileDisplayToggle initial={isDisplayingFriends} setValue={setIsDisplayingFriends}/>
             </ToggleContainer>
-            <Text>{isDisplayingFriends ? 'yes' : 'no'}</Text>
-            <DisplayContent list={friends}/>
+            <Divider {...style}/>
+            {isDisplayingFriends && <FriendList list={friends}/>}
+            <MonthView {...month}/>
+
         </Background>
         </Container>
     );

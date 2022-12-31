@@ -59,6 +59,23 @@ const WeekOpacity = styled.View`
     z-index: -1;
 `;
 
+const EditBox = styled.TouchableOpacity`
+    align-self: center;
+    width: ${props => 185 * props.widthFactor}px;
+    height: ${props => 40 * props.heightFactor}px;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px;
+    border-color: #575757;
+    border-radius: ${props => 11 * props.widthFactor}
+    margin-vertical: ${props => 15 * props.heightFactor}px;
+`;
+
+const EditText = styled.Text`
+    font-family: Inter-SemiBold;
+    font-size: 14px;
+`;
+
 function weekOfCurr(current, first, last) {
     var week = new Array();
     let day = current.getDay()
@@ -137,7 +154,11 @@ const MonthView = props => {
                     </WeekBox>
                 </>
             ))}
-            <WeekBox {...style}></WeekBox>
+            <EditBox {...style}>
+                <EditText {...style}>
+                    Edit this week's draft
+                </EditText>
+            </EditBox>
         </MonthBox>
     );
 };

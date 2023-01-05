@@ -7,6 +7,7 @@ import backArrow from '../../assets/backArrow.png'
 import ProfileDisplayToggle from './ProfileDisplayToggle';
 import FriendList from './FriendList';
 import MonthView from './MonthView';
+import WeekView from './WeekView';
 
 const Container = styled(SafeAreaView)`
     background-color: ${props => props.palette.BG};
@@ -83,7 +84,7 @@ const Profile = ({route, navigation}) => {
     const robert = {name: "Robert", username: "robert"};
     const friends = [max, michael, maximilliano, robert];
 
-    const month = {month: 11, year: 2022}
+    const month = {day: 5, month: 0, year: 2023}
     return (
         <Container {...style}>
         <Background {...style}>
@@ -98,7 +99,7 @@ const Profile = ({route, navigation}) => {
             </ToggleContainer>
             <Divider {...style}/>
             {isDisplayingFriends && <FriendList list={friends}/>}
-            <MonthView {...month} navigation={navigation}/>
+            <WeekView {...month} navigation={navigation}/>
         </Background>
         </Container>
     );

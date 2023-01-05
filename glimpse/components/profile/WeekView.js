@@ -9,7 +9,7 @@ const MonthBox = styled.View`
     border-radius: ${props => 16 * props.widthFactor}px;
     background-color: #f0f0f0;
     padding-horizontal: ${props => 14 * props.widthFactor}px;
-    padding-top: ${props => 9 * props.heightFactor}px;
+    padding-top: ${props => 12 * props.heightFactor}px;
 `;
 
 const MonthText = styled.Text`
@@ -51,11 +51,11 @@ const WeekOpacity = styled.View`
     position: absolute;
     width: ${props => 330 * props.widthFactor}px;
     height: ${props => 40 * props.heightFactor}px;
-    margin-left: ${props => 12*props.widthFactor}px;
+    margin-left: ${props => 12 * props.widthFactor}px;
     margin-top: ${props =>
-        32.2 * props.heightFactor + (props.index - 0) * 50 * props.heightFactor}px;
+        35.2 * props.heightFactor}px;
     border-radius: 500px;
-    background-color: #D9D9D9;
+    background-color: #d9d9d9;
     z-index: -1;
 `;
 
@@ -76,55 +76,32 @@ const EditText = styled.Text`
     font-size: 14px;
 `;
 
-function weekOfCurr(current, first, last) {
+function weekOfCurr(current) {
     var week = new Array();
-    let day = current.getDay()
+    let day = current.getDay();
+    let weekIsActiveWeek = false;
     current.setDate(current.getDate() - day + 1);
     for (var i = 0; i < 7; i++) {
         let date = new Date(current);
-        let day = date.getDate();
-        if ((first && day > 7) || (last && day < 7)) {
-            week.push("");
-        } else {
-            week.push(day);
+        let currentDay = new Date();
+        currentDay.setHours(0);
+        currentDay.setMilliseconds(0);
+        currentDay.setMinutes(0);
+        currentDay.setSeconds(0);
+        console.log(currentDay)
+        console.log(date)
+        if (date.toDateString() == currentDay.toDateString()) {
+            console.log('active')
+            weekIsActiveWeek = true;
         }
+        let day = date.getDate();
+        week.push(day);
         current.setDate(current.getDate() + 1);
     }
-    return week;
+    return {week, weekIsActiveWeek};
 }
 
-function getDaysInMonth(month, year) {
-    return new Date(year, month, 0).getDate();
-}
-
-function weekFromStartMonth(currDay, month, year) {
-    /**
-     * This function will fail to return a week in some circumstances. For example if
-     * currDay = 5 and Wednesday is the 1st of the month, the following week will start with 5.
-     * after second iteration day = 8 > currDay. So we need to have some additional
-     * normalized value
-     * 
-     */
-    var weeksInThisMonth = new Array();
-    let day = 1;
-    let currWeek = 0;
-    while (day < currDay) {
-        if (day + 7 < currDay) {
-            currWeek += 1;
-        }
-        weeksInThisMonth.push(
-            weekOfCurr(
-                new Date(year, month, day),
-                day == 1,
-                day + 7 > getDaysInMonth(month, year)
-            ),
-        );
-        day += 7;
-    }
-    return {weeksInThisMonth, currWeek};
-}
-
-const MonthView = (props) => {
+const WeekView = props => {
     const windowHeight = Dimensions.get('window').height;
     const windowWidth = Dimensions.get('window').width;
     const {palette, isDarkMode} = useContext(Context);
@@ -133,40 +110,51 @@ const MonthView = (props) => {
         widthFactor: windowWidth / 390,
         palette,
     };
-    const {month, year, navigation} = props;
-
-    const currDay = new Date(year, month, 5).getDate();
-    const {weeksInThisMonth, currWeek} = weekFromStartMonth(currDay, month, year);
+    const {day, month, year, navigation} = props;
+    const {week, weekIsActiveWeek} = weekOfCurr(new Date(year, month, day));
+    
+    const currDay = new Date().getDate();
+    const months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
 
     return (
+        <>
         <MonthBox {...style}>
             <MonthText {...style}>
-                {month} {year}
+                {months[month]} {year}
             </MonthText>
-            {weeksInThisMonth.map((week, index) => (
-                <>
-                    {index == currWeek && <WeekOpacity {...style} index={index}/>}
                     <WeekBox {...style}>
                         {week.map((day, index) => (
                             <>
                                 {day == currDay && (
                                     <DayCircle {...style} index={index} />
                                 )}
-                                <DayText isCurrDay={day == currDay} {...style}>
+                                <DayText isCurrDay={day==currDay} {...style}>
                                     {day}
                                 </DayText>
                             </>
                         ))}
                     </WeekBox>
-                </>
-            ))}
-            <EditBox {...style} onPress={() => navigation.navigate("EditDraft")}>
-                <EditText {...style}>
-                    Edit this week's draft
-                </EditText>
-            </EditBox>
         </MonthBox>
+            <EditBox
+                {...style}
+                onPress={() => navigation.navigate('EditDraft')}>
+                <EditText {...style}>Edit this week's draft</EditText>
+            </EditBox>
+        </>
     );
 };
 
-export default MonthView;
+export default WeekView;

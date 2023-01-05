@@ -40,15 +40,15 @@ const CancelDoneText = styled.Text`
 `;
 
 const ImageBlock = styled.View`
-height: ${props => 120 * props.widthFactor}px;
-width: ${props => 120 * props.widthFactor}px;
+    height: ${props => 120 * props.widthFactor}px;
+    width: ${props => 120 * props.widthFactor}px;
 `;
 
 const StyledImage = styled.Image`
-height: ${props => 115 * props.widthFactor}px;
-width: ${props => 115 * props.widthFactor}px;
-border-radius: ${props => 10 * props.widthFactor}px;
-background-color: ${props => props.palette.XFG};
+    height: ${props => 115 * props.widthFactor}px;
+    width: ${props => 115 * props.widthFactor}px;
+    border-radius: ${props => 10 * props.widthFactor}px;
+    background-color: ${props => props.palette.XFG};
 `;
 
 const BlackCircle = styled.TouchableOpacity`
@@ -69,21 +69,21 @@ const WhiteX = styled.Text`
 `;
 
 const AddPhotoBox = styled.TouchableOpacity`
-align-self: center;
-width: ${props => 120 * props.widthFactor}px;
-height: ${props => 40 * props.heightFactor}px;
-align-items: center;
-justify-content: center;
-border-width: 2px;
-border-color: #4D4D4D;
-border-radius: ${props => 11 * props.widthFactor}px;
-margin-vertical: ${props => 20 * props.heightFactor}px;
+    align-self: center;
+    width: ${props => 120 * props.widthFactor}px;
+    height: ${props => 40 * props.heightFactor}px;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px;
+    border-color: #4d4d4d;
+    border-radius: ${props => 11 * props.widthFactor}px;
+    margin-vertical: ${props => 20 * props.heightFactor}px;
 `;
 
 const AddPhotoText = styled.Text`
-font-family: Inter-SemiBold;
-font-size: 14px;
-color: #4D4D4D;
+    font-family: Inter-SemiBold;
+    font-size: 14px;
+    color: #4d4d4d;
 `;
 
 const EditDraft = ({route, navigation}) => {
@@ -108,6 +108,9 @@ const EditDraft = ({route, navigation}) => {
         {name: '0', key: 'zero'},
     ];
     const [data, setData] = useState(initialData);
+    const imageBlockHeight = 120 * style.widthFactor;
+    const numCols = 3;
+    const numRows = Math.ceil(initialData.length / numCols);
 
     const renderDraggableImage = item => {
         return (
@@ -132,18 +135,19 @@ const EditDraft = ({route, navigation}) => {
                         <CancelDoneText>Done</CancelDoneText>
                     </TouchableOpacity>
                 </Header>
-
+                <View style={{height: (imageBlockHeight + 2) * numRows}}>
                 <DraggableGrid
                     numColumns={3}
                     renderItem={renderDraggableImage}
                     style={{
-                        backgroundColor: 'green'
+                        backgroundColor: 'green',
                     }}
                     data={data}
                     onDragRelease={data => {
                         setData(data);
                     }}
-                />
+                    />
+                </View>
                 <AddPhotoBox {...style}>
                     <AddPhotoText>Add photo</AddPhotoText>
                 </AddPhotoBox>

@@ -2,7 +2,7 @@ import {Text, ScrollView, Dimensions} from 'react-native';
 import React from 'react';
 import styled from 'styled-components';
 import AddFriendIconImage from '../../assets/addFriendIcon.png';
-import Post from './Post'
+import Post from './Post';
 
 const Container = styled.SafeAreaView`
     display: flex;
@@ -51,17 +51,21 @@ const Home = ({route, navigation}) => {
         <Container>
             <Header width={windowWidth}>
                 <AddFriendButton {...style}>
-                    <AddFriendIcon source={AddFriendIconImage} width={windowWidth} />
+                    <AddFriendIcon
+                        source={AddFriendIconImage}
+                        width={windowWidth}
+                    />
                 </AddFriendButton>
                 <Title>Glimpse</Title>
-                <ProfileButton onPress={() => navigation.navigate("Profile")}>
-                    <ProfileIcon width={windowWidth}/>
+                <ProfileButton onPress={() => navigation.navigate('Profile')}>
+                    <ProfileIcon width={windowWidth} />
                 </ProfileButton>
             </Header>
             <ScrollView>
-                <Post/>
-                <Post/>
+                <Post />
+                <Post />
             </ScrollView>
+            <Text>sdfslijnawdlfjasnfdlsdnjfjn</Text>
         </Container>
     );
 };

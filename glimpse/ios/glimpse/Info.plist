@@ -64,5 +64,11 @@
 		<string>Inter-Thin.ttf</string>
 		<string>Inter-VariableFont_slnt,wght.ttf</string>
 	</array>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <true/>
+    <key>NSCameraUsageDescription</key>
+    <true/>
+    <key>NSMicrophoneUsageDescription</key>
+    <true/>
 </dict>
 </plist>

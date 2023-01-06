@@ -136,7 +136,7 @@ const WeekView = props => {
                         {week.map((day, index) => (
                             <>
                                 {day == currDay && (
-                                    <DayCircle {...style} index={index} />
+                                    <DayCircle key={index + "_circle"} {...style} index={index} />
                                 )}
                                 <DayText key={index} isCurrDay={day==currDay} {...style}>
                                     {day}

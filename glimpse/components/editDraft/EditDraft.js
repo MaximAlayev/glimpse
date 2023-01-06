@@ -4,6 +4,8 @@ import {DraggableGrid} from 'react-native-draggable-grid';
 import styled from 'styled-components/native';
 import {Context} from '../../services/ContextProvider';
 import addImageIcon from '../../assets/addImageIcon.png';
+import PostButton from './PostButton';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const Container = styled.SafeAreaView`
     background-color: ${props => props.palette.BG};
@@ -69,30 +71,27 @@ const WhiteX = styled.Text`
     text-align: center;
 `;
 
-const AddPhotoBox = styled.TouchableOpacity`
-    align-self: center;
-    width: ${props => 120 * props.widthFactor}px;
-    height: ${props => 40 * props.heightFactor}px;
-    align-items: center;
-    justify-content: center;
-    border-width: 2px;
-    border-color: #4d4d4d;
-    border-radius: ${props => 11 * props.widthFactor}px;
-    margin-vertical: ${props => 20 * props.heightFactor}px;
-`;
-
-const AddPhotoText = styled.Text`
-    font-family: Inter-SemiBold;
-    font-size: 14px;
-    color: #4d4d4d;
-`;
-
 const AddImageIcon = styled.Image`
     height: ${props => 115 * props.widthFactor}px;
     width: ${props => 115 * props.widthFactor}px;
 `;
 
+const DescriptionBox = styled.TextInput`
+    margin-top: ${props => 25 * props.heightFactor}px;
+    font-family: Inter-SemiBold;
+    font-size: 14px;
+    display: flex;
+    justify-contents: flex-start;
+    width: ${props => 370 * props.widthFactor}px;
+    height: ${props => 145 * props.heightFactor}px;
+    padding: ${props => 15 * props.widthFactor}px;
+    border-color: #575757;
+    border-radius: ${props => 10 * props.widthFactor}px;
+    border-width: 2px;
+`;
+
 const EditDraft = ({route, navigation}) => {
+    const [description, setDescription] = useState('');
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
     const {palette} = useContext(Context);
@@ -129,17 +128,30 @@ const EditDraft = ({route, navigation}) => {
         setImages(filtered);
     };
 
+    const addPhoto = () => {
+        launchImageLibrary(null, (response) => {
+            if (!response.didCancel && !response.error) {
+                console.log('Response = ', response);
+            }
+            let data = response.assets[0]
+            // make sure to put the add image button at end as well
+            let all_images_except_last = images.splice(0, images.length - 1);
+            let new_images = [...all_images_except_last, {name: data.fileName, key: data.fileName, uri: data.uri}, images[images.length - 1]];
+            setImages(new_images);
+        });
+    }
+
     const renderDraggableImage = item => {
         if (item.key === 'addImageIcon') {
             return (
-                <TouchableOpacity>
+                <TouchableOpacity onPress={addPhoto}>
                     <AddImageIcon {...style} source={addImageIcon} />
                 </TouchableOpacity>
             );
         } else {
             return (
                 <ImageBlock {...style}>
-                    <StyledImage {...style} source={item.source} />
+                    <StyledImage {...style} source={{uri: item.uri}} />
                     <BlackCircle
                         {...style}
                         onPress={() => removeImage(item.key)}>
@@ -172,6 +184,14 @@ const EditDraft = ({route, navigation}) => {
                         }}
                     />
                 </View>
+                <DescriptionBox
+                    placeholder="Enter description..."
+                    value={description}
+                    multiline={true}
+                    onChangeText={setDescription}
+                    {...style}
+                />
+                <PostButton/>
             </Background>
         </Container>
     );

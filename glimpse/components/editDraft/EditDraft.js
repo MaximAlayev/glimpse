@@ -1,8 +1,9 @@
-import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
+import {View, Dimensions, TouchableOpacity} from 'react-native';
 import React, {useState, useContext} from 'react';
 import {DraggableGrid} from 'react-native-draggable-grid';
 import styled from 'styled-components/native';
 import {Context} from '../../services/ContextProvider';
+import addImageIcon from '../../assets/addImageIcon.png';
 
 const Container = styled.SafeAreaView`
     background-color: ${props => props.palette.BG};
@@ -86,6 +87,11 @@ const AddPhotoText = styled.Text`
     color: #4d4d4d;
 `;
 
+const AddImageIcon = styled.Image`
+    height: ${props => 115 * props.widthFactor}px;
+    width: ${props => 115 * props.widthFactor}px;
+`;
+
 const EditDraft = ({route, navigation}) => {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -95,7 +101,7 @@ const EditDraft = ({route, navigation}) => {
         heightFactor: windowHeight / 844,
         palette,
     };
-    initialData = [
+    var initialData = [
         {name: '1', key: 'one'},
         {name: '2', key: 'two'},
         {name: '3', key: 'three'},
@@ -106,21 +112,42 @@ const EditDraft = ({route, navigation}) => {
         {name: '8', key: 'eight'},
         {name: '9', key: 'night'},
         {name: '0', key: 'zero'},
+        {
+            name: 'AddImageIcon',
+            key: 'addImageIcon',
+            disabledReSorted: true,
+            disabledDrag: true,
+        },
     ];
-    const [data, setData] = useState(initialData);
+    const [images, setImages] = useState(initialData);
     const imageBlockHeight = 120 * style.widthFactor;
     const numCols = 3;
-    const numRows = Math.ceil(initialData.length / numCols);
+    const numRows = Math.ceil(images.length / numCols);
+
+    const removeImage = key => {
+        const filtered = images.filter(image => image.key !== key);
+        setImages(filtered);
+    };
 
     const renderDraggableImage = item => {
-        return (
-            <ImageBlock {...style}>
-                <StyledImage {...style} source={item.source} />
-                <BlackCircle {...style}>
-                    <WhiteX>X</WhiteX>
-                </BlackCircle>
-            </ImageBlock>
-        );
+        if (item.key === 'addImageIcon') {
+            return (
+                <TouchableOpacity>
+                    <AddImageIcon {...style} source={addImageIcon} />
+                </TouchableOpacity>
+            );
+        } else {
+            return (
+                <ImageBlock {...style}>
+                    <StyledImage {...style} source={item.source} />
+                    <BlackCircle
+                        {...style}
+                        onPress={() => removeImage(item.key)}>
+                        <WhiteX>X</WhiteX>
+                    </BlackCircle>
+                </ImageBlock>
+            );
+        }
     };
 
     return (
@@ -136,21 +163,15 @@ const EditDraft = ({route, navigation}) => {
                     </TouchableOpacity>
                 </Header>
                 <View style={{height: (imageBlockHeight + 2) * numRows}}>
-                <DraggableGrid
-                    numColumns={3}
-                    renderItem={renderDraggableImage}
-                    style={{
-                        backgroundColor: 'green',
-                    }}
-                    data={data}
-                    onDragRelease={data => {
-                        setData(data);
-                    }}
+                    <DraggableGrid
+                        numColumns={3}
+                        renderItem={renderDraggableImage}
+                        data={images}
+                        onDragRelease={images => {
+                            setImages(images);
+                        }}
                     />
                 </View>
-                <AddPhotoBox {...style}>
-                    <AddPhotoText>Add photo</AddPhotoText>
-                </AddPhotoBox>
             </Background>
         </Container>
     );

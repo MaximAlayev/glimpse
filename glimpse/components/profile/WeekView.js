@@ -88,10 +88,7 @@ function weekOfCurr(current) {
         currentDay.setMilliseconds(0);
         currentDay.setMinutes(0);
         currentDay.setSeconds(0);
-        console.log(currentDay)
-        console.log(date)
         if (date.toDateString() == currentDay.toDateString()) {
-            console.log('active')
             weekIsActiveWeek = true;
         }
         let day = date.getDate();
@@ -141,7 +138,7 @@ const WeekView = props => {
                                 {day == currDay && (
                                     <DayCircle {...style} index={index} />
                                 )}
-                                <DayText isCurrDay={day==currDay} {...style}>
+                                <DayText key={index} isCurrDay={day==currDay} {...style}>
                                     {day}
                                 </DayText>
                             </>

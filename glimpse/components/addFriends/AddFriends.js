@@ -28,8 +28,8 @@ const Background = styled(View)`
 
 const StyledSearchIcon = styled(Image)`
     position: absolute;
-    margin-top: ${props => (props.height * 55) / 844}px;
-    margin-left: ${props => (props.height * 25) / 844}px;
+    margin-top: ${props => (props.height * 10) / 844}px;
+    margin-left: ${props => (props.height * 76) / 844}px;
     width: ${props => (props.width * 20) / 390}px;
     height: ${props => (props.width * 20) / 390}px;
     resize-mode: contain;
@@ -38,9 +38,9 @@ const StyledSearchIcon = styled(Image)`
 const StyledSearchBar = styled(TextInput)`
     padding-left: ${props => (props.width * 40) / 390}px;
     border-radius: ${props => (props.width * 10) / 390}px;
-    margin-top: ${props => (props.height * 15) / 844}px;
     height: ${props => (props.height * 40) / 844}px;
     width: ${props => (props.width * 300) / 390}px;
+    margin-left: ${props => (props.width * 20) / 390}px;
     background-color: #ececec;
     font-size: 14px;
 `;
@@ -101,6 +101,14 @@ const BackArrowIcon = styled.Image`
     height: ${props => (props.height * 14.4) / 844}px;
 `;
 
+const Header = styled.View`
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    height: ${props => (props.height * 40) / 844}px;
+    align-items: center;
+`;
+
 const AddFriends = ({route, navigation}) => {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -119,16 +127,24 @@ const AddFriends = ({route, navigation}) => {
     return (
         <Container {...style}>
             <Background {...style}>
-                <BackArrowButton {...style} onPress={() => navigation.goBack()}>
-                    <BackArrowIcon {...style} source={backArrow} />
-                </BackArrowButton>
-                <StyledSearchBar
-                    placeholder="Search for friends"
-                    placeholderTextColor="#6D6D6D"
+                <Header {...style}>
+                    <BackArrowButton
+                        {...style}
+                        onPress={() => navigation.goBack()}>
+                        <BackArrowIcon {...style} source={backArrow} />
+                    </BackArrowButton>
+                    <StyledSearchBar
+                        placeholder="Search for friends"
+                        placeholderTextColor="#6D6D6D"
+                        width={windowWidth}
+                        height={windowHeight}
+                    />
+                </Header>
+                <StyledSearchIcon
                     width={windowWidth}
                     height={windowHeight}
+                    source={SearchIconLight}
                 />
-                <StyledSearchIcon width={windowWidth} height={windowHeight} source={SearchIconLight}/>
                 <ResultsContainer width={windowWidth} height={windowHeight}>
                     {searchResults.map(user => (
                         <ProfileContainer

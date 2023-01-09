@@ -50,7 +50,7 @@ const Home = ({route, navigation}) => {
     return (
         <Container>
             <Header width={windowWidth}>
-                <AddFriendButton {...style}>
+                <AddFriendButton {...style} onPress={() => navigation.navigate('AddFriends')}>
                     <AddFriendIcon
                         source={AddFriendIconImage}
                         width={windowWidth}

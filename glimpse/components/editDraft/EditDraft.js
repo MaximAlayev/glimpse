@@ -101,16 +101,6 @@ const EditDraft = ({route, navigation}) => {
         palette,
     };
     var initialData = [
-        {name: '1', key: 'one'},
-        {name: '2', key: 'two'},
-        {name: '3', key: 'three'},
-        {name: '4', key: 'four'},
-        {name: '5', key: 'five'},
-        {name: '6', key: 'six'},
-        {name: '7', key: 'seven'},
-        {name: '8', key: 'eight'},
-        {name: '9', key: 'night'},
-        {name: '0', key: 'zero'},
         {
             name: 'AddImageIcon',
             key: 'addImageIcon',

@@ -6,6 +6,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
 import EditDraft from './components/editDraft/EditDraft';
+import AddFriends from './components/addFriends/AddFriends';
 import Provider from './services/ContextProvider';
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +20,7 @@ function NavigationStack() {
                 cardShadowEnabled: false,
             }}>
             <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="AddFriends" component={AddFriends} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="EditDraft" component={EditDraft} />
             {
